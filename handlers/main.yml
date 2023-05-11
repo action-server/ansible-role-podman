@@ -1,0 +1,21 @@
+---
+- name: Start user dbus.service
+  ansible.builtin.systemd:
+    name: dbus
+    state: started
+    scope: user
+    enabled: true
+
+- name: Enable system podman-restart-custom.service
+  ansible.builtin.systemd:
+    name: podman-restart-custom
+    enabled: true
+    daemon_reload: true
+  become: true
+
+- name: Enable user podman-restart-custom.service
+  ansible.builtin.systemd:
+    name: podman-restart-custom
+    scope: user
+    enabled: true
+    daemon_reload: true

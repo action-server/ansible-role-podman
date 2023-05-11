@@ -1,0 +1,40 @@
+---
+- name: Install podman, uidmap, slirp4netns and python3-pip
+  ansible.builtin.apt:
+    name: [ 'podman', 'uidmap', 'slirp4netns', 'python3-pip' ]
+    state: present
+  become: true
+  notify:
+    - Start user dbus.service
+
+- name: Install podman-compose
+  ansible.builtin.pip:
+    name: [ 'podman-compose<0.2' ]
+    state: present
+  become: true
+
+- name: Create /usr/local/systemd/system directory
+  ansible.builtin.file:
+    path: /usr/local/lib/systemd/system
+    state: directory
+  become: true
+
+- name: Create /usr/local/systemd/user directory
+  ansible.builtin.file:
+    path: /usr/local/lib/systemd/user
+    state: directory
+  become: true
+
+- name: Upload system podman-restart-custom.service
+  ansible.builtin.copy:
+    src: ./files/podman-restart-custom.service
+    dest: /usr/local/lib/systemd/system/.
+  become: yes
+  notify: Enable system podman-restart-custom.service
+
+- name: Upload user podman-restart-custom.service
+  ansible.builtin.copy:
+    src: ./files/podman-restart-custom.service
+    dest: /usr/local/lib/systemd/user/.
+  become: yes
+  notify: Enable user podman-restart-custom.service
