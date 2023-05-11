@@ -6,6 +6,10 @@
     scope: user
     enabled: true
 
+- name: Enable lingering
+  ansible.builtin.command: /usr/bin/loginctl enable-linger
+  become: true
+
 - name: Enable system podman-restart-custom.service
   ansible.builtin.systemd:
     name: podman-restart-custom

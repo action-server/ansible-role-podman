@@ -6,6 +6,7 @@
   become: true
   notify:
     - Start user dbus.service
+    - Enable lingering
 
 - name: Install podman-compose
   ansible.builtin.pip:
