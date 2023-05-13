@@ -1,15 +1,8 @@
 ---
-- name: Start global dbus.service
-  ansible.builtin.systemd:
-    name: dbus
-    state: started
-    enabled: true
-
 - name: Enable system podman-restart-custom.service
   ansible.builtin.systemd:
     name: podman-restart-custom
     enabled: true
-    daemon_reload: true
   become: true
 
 - name: Enable global podman-restart-custom.service
@@ -17,5 +10,4 @@
     name: podman-restart-custom
     scope: global
     enabled: true
-    daemon_reload: true
   become: true
