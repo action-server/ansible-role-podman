@@ -1,11 +1,13 @@
 ---
 - name: Install podman, uidmap, slirp4netns, dbus-user-session and python3-pip
   ansible.builtin.apt:
-    name: [ 'podman', 'uidmap', 'slirp4netns', 'python3-pip' ]
+    name: [ 'podman', 'uidmap', 'slirp4netns', 'dbus-user-session', 'python3-pip' ]
     state: present
     update_cache: yes
     cache_valid_time: 3600
   become: true
+  notify:
+    - Start dbus.service
 
 - name: Install podman-compose
   ansible.builtin.pip:
