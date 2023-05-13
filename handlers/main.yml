@@ -1,9 +1,9 @@
 ---
-- name: Start user dbus.service
+- name: Start global dbus.service
   ansible.builtin.systemd:
     name: dbus
     state: started
-    scope: user
+    scope: global
     enabled: true
 
 - name: Enable lingering
@@ -17,9 +17,10 @@
     daemon_reload: true
   become: true
 
-- name: Enable user podman-restart-custom.service
+- name: Enable global podman-restart-custom.service
   ansible.builtin.systemd:
     name: podman-restart-custom
-    scope: user
+    scope: global
     enabled: true
     daemon_reload: true
+  become: true

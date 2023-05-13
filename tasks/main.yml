@@ -7,7 +7,7 @@
     cache_valid_time: 3600
   become: true
   notify:
-    - Start user dbus.service
+    - Start global dbus.service
     - Enable lingering
 
 - name: Install podman-compose
@@ -35,9 +35,9 @@
   become: yes
   notify: Enable system podman-restart-custom.service
 
-- name: Upload user podman-restart-custom.service
+- name: Upload global podman-restart-custom.service
   ansible.builtin.copy:
     src: ./files/podman-restart-custom.service
     dest: /usr/local/lib/systemd/user/.
   become: yes
-  notify: Enable user podman-restart-custom.service
+  notify: Enable global podman-restart-custom.service
